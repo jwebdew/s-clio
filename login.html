@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login.scss">
+    <link rel="icon" href="img/CLIO.png">
+
+    <!-- 섹션 제목 폰트 링크 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+    <!-- 스크립트 링크 -->
+    <script src="lib/jquery-3.7.1.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01" crossorigin="anonymous"></script>
+    <script>
+        Kakao.init('c089c8172def97eb00c07217cae17495'); // 사용하려는 앱의 JavaScript 키 입력
+    </script>
+
+    <script>
+        function new_window() {
+            window.open(
+            "kakao.html",
+            "kakao",
+            "width=500, height=700, top=100, left=100"
+            );
+        }
+
+        function loginWithKakao() {
+            Kakao.Auth.authorize({
+            redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
+            });
+        }
+
+        // 아래는 데모를 위한 UI 코드입니다.
+        displayToken()
+        function displayToken() {
+            var token = getCookie('authorize-access-token');
+
+            if(token) {
+            Kakao.Auth.setAccessToken(token);
+            Kakao.Auth.getStatusInfo()
+                .then(function(res) {
+                if (res.status === 'connected') {
+                    document.getElementById('token-result').innerText
+                    = 'login success, token: ' + Kakao.Auth.getAccessToken();
+                }
+                })
+                .catch(function(err) {
+                Kakao.Auth.setAccessToken(null);
+                });
+            }
+        }
+
+        function getCookie(name) {
+            var parts = document.cookie.split(name + '=');
+            if (parts.length === 2) { return parts[1].split(';')[0]; }
+        }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="top_btn">
+            <div class="top">
+                <a href="#"><button>TOP</button></a>
+            </div><!-- top end -->
+            <div class="call">
+                <a href="#">
+                    <img src="img/icons_고객센터.png" alt="고객센터">
+                    <button>고객센터</button>
+                </a>
+            </div><!-- call end -->
+        </div><!-- top_btn -->
+
+      
+        <main class="main">
+            <div class="login">
+                <div class="inner">
+                    <h1>로그인</h1>
+                    <div class="kakao_btn">
+                        <button class="kakao" value="New Window" onclick="new_window();" >카카오로 1초만에 시작하기</button><!-- kakao -->
+                    </div><!-- kakao_btn -->
+
+                    <div class="box_btn">
+                        <div class="or_line">
+                            <hr class="hr" size="1">
+                            <p class="text">OR</p>
+                            <hr class="hr" size="1">
+                        </div><!-- or_line -->
+
+                        <div class="id_password">
+                            <div class="id_box">
+                                <input type="text" placeholder="아이디"/>
+                            </div><!-- id_box -->
+                            <div class="id_box password">
+                                <input type="text" placeholder="비밀번호(대문자+숫자+특수문자 조합 8~20자리)"/>
+                            </div><!-- password -->
+
+                            <div class="check_box">
+                                <ul>
+                                    <li><input type="checkbox"><p>아이디저장</p></li>
+                                    <li><input type="checkbox"><p>자동로그인</p></li>
+                                </ul>
+                            </div><!-- check_box -->
+
+                            <div class="login_box">
+                                <a href="#">로그인</a>
+                            </div><!-- login_box -->
+                        </div><!-- id_password end -->
+
+                        <div class="last_login">
+                            <ul>
+                                <li><a href="#">아이디 찾기</a></li>
+                                <li><a href="#">비밀번호 찾기</a></li>
+                                <li><a href="#">회원가입</a></li>
+                                <li><a href="#">비회원 주문조회</a></li>
+                            </ul>
+                        </div><!-- last_login -->
+
+                        <div class="or_line">
+                            <hr class="hr" size="1">
+                            <p class="text">OR</p>
+                            <hr class="hr" size="1">
+                        </div><!-- or_line -->
+
+                        <div class="btn_icon">
+                            <a href="#">
+                                <img src="img/ico_naver.png" alt="네이버">
+                            </a>
+                            <a href="#">
+                                <img src="img/ico_apple.svg" alt="애플">
+                            </a>
+                        </div><!-- naver -->
+                    </div><!-- box_btn -->
+                </div><!-- inner -->
+            </div><!-- login -->
+        </main><!-- main -->
+
+   
+    </div><!-- wrap -->
+</body>
+</html>
